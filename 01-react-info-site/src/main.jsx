@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Message from './Message.jsx'
+import Message from './components/Message.jsx'
+import './styles/Message.css'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(

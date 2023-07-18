@@ -1,0 +1,147 @@
+////////////////////////////////////////////////
+
+React + Vite
+
+Create a new app:
+- command: npm create vite@latest <project-folder>
+- choose what framework and languages 
+    (JS, JS + SWC, TS + SWC, TS)
+- cd <your folder name>
+- npm run dev
+ 
+ Vite
+ - build tool for modern web development 
+ - CRA on steroids (faster than CRA)
+ - uses modern ES modules 
+ - supports multiple framework
+
+////////////////////////////////////////////////
+
+
+File Structure
+
+- well-organized Structure can help improve code maintainability
+- makes it easier for debugging and deployment
+
+    your-react-app/
+    | -- README.md
+    | -- node_modules/
+    | -- package.json
+    | -- public/
+    |    | -- index.html
+    |    | -- favicon.ico
+    |    | -- assets/
+    |    |    | -- images/
+    |    |    |    | -- logo.svg
+    |    |    | -- fonts/
+    |    |    |    | -- ...
+    |    | -- styles/
+    |    |    | -- index.css
+    |    |    | -- components/
+    |    |    |    | -- header.css
+    |    |    |    | -- footer.css
+    | -- src/
+        | -- App.js
+        | -- index.js
+        | -- components/
+        |    | -- Header/
+        |    |    | -- Header.js
+        |    |    | -- Header.css
+        |    | -- Footer/
+        |    |    | -- Footer.js
+        |    |    | -- Footer.css
+        | -- utils/
+        |    | -- api.js
+        |    | -- helpers.js
+        | -- pages/
+                | -- Home/
+                |    | -- Home.js
+                |    | -- Home.css
+                | -- About/
+                    | -- About.js
+                    | -- About.css
+
+- node_modules : directory that contains all the dependencies
+- package.json : contains information about the created app,
+                 including its name, version, dependencies, and scrripts.
+- public       : contains static assets that are served directly
+                 by your app, such as 'index.html' and the favicon.
+- src          : contains the source code for your app
+- App.js       : main component of your app. this is where you can
+                 store all of your components.
+    Ex.
+
+    App.js
+
+        import React from 'react';
+        import Header from './components/Header/Header';
+        import Footer from './components/Footer/Footer';
+
+        const App = () => {
+        return (
+            <div>
+            <Header />
+            <h1>Welcome to My React App!</h1>
+            <Footer />
+            </div>
+        );
+        };
+
+        export default App;
+
+    Header.js
+
+        import React from 'react';
+
+        const Header = () => {
+        return (
+            <header>
+            <h2>This is the Header</h2>
+            </header>
+        );
+        };
+
+        export default Header;
+
+    Footer.js
+
+        import React from 'react';
+
+        const Footer = () => {
+        return (
+            <footer>
+            <p>This is the Footer</p>
+            </footer>
+        );
+        };
+
+        export default Footer;
+
+    index.js
+
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+        import App from './App';
+
+        ReactDOM.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>,
+        document.getElementById('root')
+        );
+
+- index.js     : entry point of your app, where you render the
+                 main component (App.js) and mount it to the DOM.
+- logo.svg     : example file that shows how to import and use 
+                 static assets in your app.
+- components   : directory that contains all the components used in your app.
+- styles       : directory that contains all the CSS styles used in your app.
+
+////////////////////////////////////////////////
+
+
+Source/s:
+- https://www.linkedin.com/pulse/file-structure-react-vite-kalyanasundar-arunachalam/
+
+Additional reading:
+- https://scrimba.com/articles/react-project-structure/

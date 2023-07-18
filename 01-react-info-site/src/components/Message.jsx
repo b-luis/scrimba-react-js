@@ -12,12 +12,13 @@ Hints:
 * You can also set the `width` attribute of the image element
   just like in HTML. In the slide, I have it set to 40px
  */
+import '../styles/Message.css';
 
 
 function Message() {
     return (
-        <section>
-            <img src="../public/react-logo.png" alt="" />
+        <section className="fun-facts">
+            <img src="../public/react-logo.png" alt="" width="40px"/>
             <h1>Fun Facts About React</h1>
             <ul>
                 <li>Was first released in 2013</li>
@@ -29,6 +30,5 @@ function Message() {
         </section>
     )
 } 
-
 
 export default Message;
