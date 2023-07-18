@@ -1,5 +1,6 @@
-import React from "react"
-import ReactDOM from "react-dom"
+// Removed becaused 
+// import React from "react"
+// import ReactDOM from "react-dom"
 
 /**
 Mini Challenge:
@@ -9,13 +10,22 @@ Mini Challenge:
   and render that component inside the Page component.
 - Move the `h1` and `ol` together into another component
   called "MainContent" and render inside Page as well.
+
+Another Challenge:
+- Add an `ul` inside the Header's `nav` and create
+  the following `li`s: "Pricing", "About", & "Contact"
 */
 
 function Header() {
     return (
         <header>
-            <nav>
-                <img src="./react-logo.png" width="40px" />
+            <nav className="nav">
+                <img className="nav-logo" src="../assets/react-logo.png" alt="react-logo" />
+                <ul className="nav-items">
+                    <li>Pricing</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                </ul>
             </nav>
         </header>
     )
@@ -23,7 +33,7 @@ function Header() {
 
 function MainContent() {
     return (
-        <div>
+        <div className="main-content">
             <h1>Reasons I'm excited to learn React</h1>
                 <ol>
                     <li>It's a popular library, so I'll be 
@@ -37,8 +47,8 @@ function MainContent() {
 
 function Footer() {
     return (
-        <footer>
-            <small>© 2021 Ziroll development. All rights reserved.</small>
+        <footer className="footer">
+            <small>© 2023 Luis development. All rights reserved.</small>
         </footer>
     )
 };
