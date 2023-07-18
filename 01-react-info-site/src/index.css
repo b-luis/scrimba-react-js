@@ -2,10 +2,12 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
+  width: 40%;
+  margin: 0 auto;
+  background-color: #282D35;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* background-color: #242424; */
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,11 +15,13 @@
 }
 
 html,
-body {
-  box-sizing: border-box;
+body,
+h1,
+ul {
   margin: 0;
 }
 
-body * {
+
+/* body * {
   outline: 1px solid magenta;
-}
+} */

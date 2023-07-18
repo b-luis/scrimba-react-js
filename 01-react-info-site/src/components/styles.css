@@ -1,0 +1,81 @@
+
+/*
+General
+*/
+
+.navbar,
+.main-content {
+    padding: 0 1em;
+}
+
+/*
+Typography
+*/
+
+/*************
+Main Content
+*************/
+
+h1 {
+    padding: 1em 0;
+}
+
+/*************
+Navigation
+*************/
+
+h3 {
+    color: #00D8FF;
+}
+
+h4 {
+    margin-left: auto;
+}
+
+/*
+Layout
+*/
+
+/*************
+Navigation
+*************/
+
+.navbar {
+    display: flex;
+    background: #21222A;
+}
+
+.navbar-img {
+    width: 100%;
+    object-fit: contain;
+    max-width: 30px;
+    padding: 0 .5em;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+/*************
+Main Content
+*************/
+
+.main-content {
+    background-image: url(../assets/react-icon-large.png);
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.main-list-items li {
+    line-height: 19px;
+    padding-block: 10px;  
+}
+
+.main-list-items li::marker {
+    font-size: 1.5rem;
+    color: #00D8FF;
+}
+

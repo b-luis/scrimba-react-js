@@ -1,13 +1,15 @@
 import logo from '../assets/react-logo.png'
+import './styles.css'
 
 function Navbar() {
     return (
-        <>
-            {/* <h1>Navbar goes here</h1> */}
-            <img src={logo} alt="react-logo" />
-            <h3></h3>
-            <h4></h4>
-        </>
+        <nav className='navbar'>
+            <div className='navbar-content'>
+                <img className="navbar-img" src={logo} alt="react-logo" />
+                <h3>ReactFacts</h3>
+            </div>
+            <h4>React Course - Project 1</h4>
+        </nav>
     )
 }
 
