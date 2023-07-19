@@ -25,6 +25,7 @@ body {
   margin: 0 auto;
   max-width: 400px;
   background-color: #f5f5f5; 
+  border: .5px solid #23252C;
   border-radius: 10px;
 }
 
