@@ -1,0 +1,83 @@
+React
+
+My overall understanding of the basic structures (simplified)
+
+- App.jsx 
+  - can server as the overall structure or layout for basic app 
+    as it can contain multiple child components and the define the 
+    structure of the app's UI.
+  
+  Ex. 
+
+    import React from 'react';
+    import Header from './components/Header';
+    import MainContent from './components/MainContent';
+    import Footer from './components/Footer';
+
+    function App() {
+      return (
+        <div className='app'>
+          <Header />
+          <MainContent />
+          <Footer />
+        </div>
+      )
+    }
+
+    export default App
+
+- main.jsx
+  - renders components to the root element of the application.
+
+  Ex.
+
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import App from './App';
+
+    ReactDOM.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>,
+      document.getElementById('root')
+    );
+
+Routing
+  - introduced when there are a lot of pages
+    like if you need an about page, contact, login.
+
+    Ex.(App.jsx)
+
+      import React from 'react';
+      import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+      import Header from './components/Header';
+      import MainContent from './components/MainContent';
+      import Footer from './components/Footer';
+      import AboutPage from './pages/AboutPage';
+      import ContactPage from './pages/ContactPage';
+      import NotFoundPage from './pages/NotFoundPage';
+
+      function App() {
+        return (
+          <Router>
+            <div className='app'>
+              <Header />
+
+              <Switch>
+                <Route exact path="/" component={MainContent} />
+                <Route path="/about" component={AboutPage} />
+                <Route path="/contact" component={ContactPage} />
+                <Route component={NotFoundPage} />
+              </Switch>
+
+              <Footer />
+            </div>
+          </Router>
+        );
+      }
+
+      export default App;
+
+- import React, the necessary components from React Router 
+  (BrowserRouter, Switch, and Route), 
+  as well as your page components (HomePage, AboutPage, ContactPage, NotFoundPage).
