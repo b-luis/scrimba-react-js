@@ -1,0 +1,81 @@
+
+/*******
+General
+*******/
+
+.info--name,
+.info--details p {
+    margin: 0;
+}
+
+/*******
+Typography
+*******/
+
+h1 {
+    color: #2B283A;
+    font-size: 2rem;
+}
+
+.info--details p {
+    color: #F47D27
+}
+
+.info--details a {
+    color: #4A4E74;
+    text-decoration: none;
+    cursor: pointer;
+}
+    .info--details a:hover {
+        text-decoration: underline;
+    }
+
+/*******
+Layout
+*******/
+
+.info--img {
+    width: 100%;
+    max-width: 400px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.info--details {
+    padding: 1em 0;
+    text-align: center;
+}
+
+.info--buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    width: 135px;
+    justify-content: center; /* Horizontally center the icon and text */
+    align-items: center;
+    padding: .6em 1em;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+    .info--icon {
+        font-size: 1rem;
+        margin-right: .5rem;
+        text-align: center;
+    }
+
+    .email {
+        background: #fff;
+        border: 1px solid #D1D5DB;
+        border-radius: .4rem;
+        color: #2B283A;
+        margin-right: 1.3em;
+    }
+
+    .linkedin {
+        border: none;
+        border-radius: .4rem;
+        background: #297FE5;
+    }

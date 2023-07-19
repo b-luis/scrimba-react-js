@@ -1,0 +1,9 @@
+Digital Business Card
+
+- must be built from scratch
+- separate components for:
+    - info (photo, name, buttons, etc.)
+    - fill in your own information
+    - about
+    - interest
+    - footer (social icons)
