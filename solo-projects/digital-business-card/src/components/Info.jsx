@@ -6,12 +6,12 @@ import { MdEmail } from "react-icons/md"
 
 function Info(){
     return ( 
-        <section className='info--section'>
+        <header className='info--section'>
             <img className="info--img" src={img} alt="kim gaeul picture" />
             <div className='info--details'>
                 <h1 className='info--name'>Kim Ga Eul (김가을)</h1>
-                <p>Frontend Developer</p>
-                <small><a href="" target="_blank">kimgaeul.website</a></small>
+                <p>K-pop Idol</p>
+                <small><a href="https://kprofiles.com/gaeul-ive-profile-facts/" target="_blank">kimgaeul.website</a></small>
             </div>
             <div className="info--buttons">
                 <button className="btn email">
@@ -23,7 +23,7 @@ function Info(){
                     LinkedIn
                 </button>
             </div>
-        </section>
+        </header>
     )
 }
 
