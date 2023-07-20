@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bulma": "^0.9.4",
+    "gatsby-plugin-sass": "^6.11.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-bulma-components": "^4.1.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.64.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
