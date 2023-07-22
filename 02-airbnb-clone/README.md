@@ -1,3 +1,2 @@
 # AirBnB Clone
 
-gi
