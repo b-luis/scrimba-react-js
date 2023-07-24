@@ -7,7 +7,7 @@ import Contact from './components/Contact'
 function App() {
 
   return (
-    <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-wrap gap-8 justify-center'>
+    <div className='flex flex-wrap gap-4 justify-center py-60'>
       <Contact
         name="Mr.Whiskerson"
         phone="(212) 555-1234"
