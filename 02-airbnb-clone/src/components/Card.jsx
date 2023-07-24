@@ -19,6 +19,7 @@ Notes:
   currently are, so don't worry about the fact that you're hard-coding all
   this data into the component.
 */
+
 function Card() {
     return (
         <div>
@@ -34,11 +35,7 @@ function Card() {
                 <p className='text-[13px] py-1'><span className='font-bold'>From $136 </span> / person</p>
             </section>
         </div>
-
     );
   }
   
-
-
-
 export default Card;
