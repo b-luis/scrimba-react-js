@@ -1,8 +1,8 @@
+import Contact from './components/Contact'
 import whiskerson from './assets/mr-whiskerson.png';
 import fluffykins from './assets/fluffykins.png'
 import felix from './assets/felix.png'
 import pumpkin from './assets/pumpkin.png'
-import Contact from './components/Contact'
 
 function App() {
 
