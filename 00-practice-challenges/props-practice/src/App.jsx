@@ -1,11 +1,21 @@
 import React from 'react'
 import Joke from './components/Joke'
+import jokesData from './js/jokesData.js'
 
+
+/*
+  TODO: Challenge: See if you can correctly pass the necessary props to the Joke component in the .map() (and render the jokeElements array) so the jokes show up on the page again
+*/
 
 function App() {
+  const jokeElements = jokesData.map((joke) => {
+    return <Joke  
+              setup={joke.setup}
+              punchline={joke.punchline}/> })
   return (
     <>
-      <Joke 
+      {jokeElements}
+      {/* <Joke 
         setup ="I got my daughter a fridge for her birthday."
         punchline="I can't wait to see her face light up when she opens it"/>
       <Joke 
@@ -19,7 +29,7 @@ function App() {
         punchline="Swarm."/>
       <Joke 
         setup ="What's the best thing about Switzerland?"
-        punchline="I don't know, but the flag is a big plus!"/>
+        punchline="I don't know, but the flag is a big plus!"/> */}
     </>
   )
 }
