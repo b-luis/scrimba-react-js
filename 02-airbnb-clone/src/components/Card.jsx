@@ -1,10 +1,7 @@
-import katie from '../assets/katie-zaferes.png'
 import star from '../assets/star.png'
 
 /*
-Challenge: Build the Card component
-For now, hard-code in the data (like 
-the rating, title, price, etc.)
+TODO: Build the Card component. For now, hard-code in the data (like the rating, title, price, etc.)
 
 Notes:
 - Only render 1 instance (I already did this for you)
@@ -20,19 +17,29 @@ Notes:
   this data into the component.
 */
 
-function Card() {
+/*
+TODO: Pass props to the Card component and display that data
+*  - img ("katie-zaferes.png")
+*  - rating ("5.0")
+*  - reviewCount (6)
+*  - country (Whatever you want)
+*  - title ("Life Lessons with Katie Zaferes")
+*  - price (136)
+*/
+
+function Card(props) {
     return (
         <div>
             <section className='py-5 pl-5  w-52'>
-                <img className='rounded-lg w-48' src={katie} alt="katie zaferes photo" />
+                <img className='rounded-lg w-48' src={props.img} alt="katie zaferes photo" />
                 <div className='flex items-center space-x-1 py-2'>
                     <img src={star} alt="star icon" className='h-3' />
-                    <span className='text-xs'>5.0</span>
-                    <span className='text-xs text-gray-500'>(6) • </span>
-                    <span className='text-xs text-gray-500'>USA</span>
+                    <span className='text-xs'>{props.rating}</span>
+                    <span className='text-xs text-gray-500'>({props.reviewCount}) • </span>
+                    <span className='text-xs text-gray-500'>{props.country}</span>
                 </div>
-                <p className='text-xs'>Life lessons with Katie Zaferes</p>
-                <p className='text-[13px] py-1'><span className='font-bold'>From $136 </span> / person</p>
+                <p className='text-xs'>{props.title}</p>
+                <p className='text-[13px] py-1'><span className='font-bold'>From ${props.price}</span> / person</p>
             </section>
         </div>
     );
