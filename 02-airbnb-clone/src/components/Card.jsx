@@ -29,19 +29,17 @@ TODO: Pass props to the Card component and display that data
 
 function Card(props) {
     return (
-        <div>
-            <section className='py-5 pl-5  w-52'>
-                <img className='rounded-lg w-48' src={props.img} alt="katie zaferes photo" />
+            <section className='flex-shrink-0'>
+                <img className='rounded-lg w-full object-cover h-56' src={props.img} />
                 <div className='flex items-center space-x-1 py-2'>
                     <img src={star} alt="star icon" className='h-3' />
                     <span className='text-xs'>{props.rating}</span>
                     <span className='text-xs text-gray-500'>({props.reviewCount}) • </span>
                     <span className='text-xs text-gray-500'>{props.country}</span>
                 </div>
-                <p className='text-xs'>{props.title}</p>
+                <p className='text-xs overflow-hidden truncate'>{props.title}</p>
                 <p className='text-[13px] py-1'><span className='font-bold'>From ${props.price}</span> / person</p>
             </section>
-        </div>
     );
   }
   
