@@ -1,0 +1,8 @@
+
+Requirements:
+
+- data array in a separate .js file
+    - title, location,  google maps, link,
+      start date, end date, description, image URL
+- use .map() and props
+- styled and polished
