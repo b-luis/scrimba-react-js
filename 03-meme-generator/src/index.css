@@ -1,3 +1,19 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Karla:wght@400;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* body * {
+    outline: 1px solid magenta;
+} */
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+
+.font-karla {
+  font-family: 'Karla', sans-serif;
+}
+

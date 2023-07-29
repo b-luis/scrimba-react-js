@@ -6,7 +6,7 @@ function Card(props){
         <section className="flex border-b-[1px] border-slate-200 py-4">
             <img className="w-32 h-48 object-cover rounded-lg" src={props.imageUrl} />
             <div className="px-4 py-4">
-                <IconContext.Provider value={{ color: "#F55A5A", className: "inline-block text-[10px] mr-1" }}>
+                <IconContext.Provider value={{ color: "#F55A5A", className: "inline-block text-[10px] mr-1"}}>
                     <FaLocationDot /> 
                 </IconContext.Provider>
                 <small className="text-[10px] uppercase tracking-widest">{props.location}</small>
