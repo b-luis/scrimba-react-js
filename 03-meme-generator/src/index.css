@@ -4,14 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body * {
+body * {
     outline: 1px solid magenta;
-} */
-
-body {
-    font-family: 'Inter', sans-serif;
 }
 
+body {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background: #FCFCFC;
+}
+
+/*
+* typography
+*/
 
 .font-karla {
   font-family: 'Karla', sans-serif;
