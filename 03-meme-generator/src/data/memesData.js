@@ -1,4 +1,4 @@
-const memesData = {
+export default {
     "success": true,
     "data": {
         "memes": [
@@ -806,4 +806,3 @@ const memesData = {
     }
 }
 
-export default memesData;
