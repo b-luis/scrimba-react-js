@@ -4,9 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body * {
+/* body * {
     outline: 1px solid magenta;
-}
+} */
 
 body {
     box-sizing: border-box;

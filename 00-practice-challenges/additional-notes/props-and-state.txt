@@ -1,0 +1,63 @@
+Props vs State
+
+
+Props
+    - immutable
+    - can be thought of as function arguments which then can be explained that it can be defined by external forces (e.g. user) with that, you can't just declare another variable inside because it defeats the purpose of having props in the first place.
+
+    for ex. (function as explanation)
+
+    we define a function named add, which takes two parameters and returns the sum of the two numbers:
+
+    ////////////////////
+
+    function add(a, b){
+        a = 5;
+        b = 3;
+
+        return a + b;
+    }
+
+    console.log(add(1, 2)) // Output is 8
+
+    ////////////////////
+
+    what happens above is that, there are arguments a, b but also already defined number.
+
+    This is what we are referring to when we say that props are immutable. 
+
+    You can't just declare a variable inside because the output isn't going to change.
+
+State
+    - mutable
+    - it's like declaring a new variable to use it 
+    - useState -> part of React library (hooks)
+
+    React.useState() -> if you don't destructure it during import like this { useState }
+
+
+    Best Practice: 
+
+    const [count, setCount] = useState(0)
+
+     * Note: if you ever need the old value of state
+     * to help you determine the new value of state,
+     * you should pass a callback function to your
+     * state setter function instead of using
+     * state directly. This callback function will
+     * receive the old value of state as its parameter,
+     * which you can then use to determine your new
+     * value of state.
+
+     ex. 
+
+     function add() {
+        setCount(prevCount => prevCount + 1)
+     }
+
+     rather than directly accessing it like this
+
+     function add(){
+        setCount(count + 1)
+     }
+
