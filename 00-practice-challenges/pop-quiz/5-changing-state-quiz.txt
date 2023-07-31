@@ -1,0 +1,30 @@
+1. You have 2 options for what you can pass in to a
+   state setter function (e.g. `setCount`). What are they?
+   
+    There are 2 options, 
+    a. you can directly use the state variable that you set 
+            for ex. const [count, setCount] = React.useState(0)
+
+            in this case, you can use the count to pass in to a state setter like this
+
+            setCount(count + 1) 
+
+            but the code above may pose some future problems with asynchronous and react batching.
+            it may not directly execute it.
+
+    b. The second option is a functional way. It uses callback function to access the previous number or state
+        in that way, it increments/decreases every time basing on the previous state.
+
+        - setCount((prevCount) => prevCount + 1) 
+        - setCount((prevCount) => prevCount - 1)
+
+2. When would you want to pass the first option (from answer
+   above) to the state setter function?
+
+    If you don't need the previous value/state.
+
+
+3. When would you want to pass the second option (from answer
+   above) to the state setter function?
+
+   If you need to access the previous state.
