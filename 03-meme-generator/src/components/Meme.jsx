@@ -3,23 +3,57 @@ import memesData from '../data/memesData.js'
 
 function Meme(){
 
-    const [memeImage, setMemeImage] = useState("") 
+    /**
+     * TODO: 
+     * * Challenge: Update our state to save the meme-related
+     * * data as an object called `meme`. It should have the
+     * * following 3 properties:
+     * * topText, bottomText, randomImage.
+     * 
+     * * The 2 text states can default to empty strings for now,
+     * * amd randomImage should default to "http://i.imgflip.com/1bij.jpg"
+     * 
+     * * Next, create a new state variable called `allMemeImages`
+     * * which will default to `memesData`, which we imported above
+     * 
+     * * Lastly, update the `getMemeImage` function and the markup 
+     * * to reflect our newly reformed state object and array in the
+     * * correct way.
+     */
+
+    //* everytime we click the button, it should return a random image
+    //* from the memesData array to replace the current random image
+    //* so in order to do that, we must use the state setter to update the
+    //* meme state. 
+    // ! DO NOT MODIFY THE STATE DIRECTLY 
+
+    const [meme, setMeme] = useState({
+        topText: '',
+        bottomText: '',
+        randomImage: 'http://i.imgflip.com/1bij.jpg'
+    })
+
+    const [allMemeImages, setMemeImage] = useState(memesData);
+    
     const getMemeImage = () => {
         const memesArray = memesData.data.memes
         const randomNumber = Math.floor(Math.random() * memesArray.length)
-        const newMemeImage = memesArray[randomNumber].url;
+        const newMemeImageURL = memesArray[randomNumber].url;
         // for debugging purposes:
         // console.log('Current memeImage:', memeImage);
         // console.log('New memeImage:', newMemeImage);
-        setMemeImage(newMemeImage);
+        setMeme(prevMeme => ({...prevMeme, randomImage: newMemeImageURL}));
     }
  
+    // * Destructure the meme state object to access the randomImage value
+    const { topText, bottomText, randomImage} = meme
+
     return(
         <main className="flex p-9 flex-col">
             <form action="">
                 <div className="flex flex-col sm:flex-row justify-between gap-4 mb-4">
-                    <input type="text" className="w-full sm:w-1/2 px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-700 rounded-md sm:text-xs  focus:border-slate-400" placeholder="Shut up" />
-                    <input type="text" className="w-full sm:w-1/2 px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-700 rounded-md sm:text-xs" placeholder="and take my money" />
+                    <input type="text" className="w-full text-black sm:w-1/2 px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-600 rounded-md sm:text-xs  focus:border-slate-400" placeholder="Shut up" />
+                    <input type="text" className="w-full text-black sm:w-1/2 px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-600 rounded-md sm:text-xs" placeholder="and take my money" />
                 </div>
                 {
                 // * preventDefault is added mainly because of the default behavior of the button which is type='submit'
@@ -30,7 +64,7 @@ function Meme(){
                 }
                 <button onClick={(e) => {e.preventDefault(); getMemeImage()}} className="p-2 w-full rounded-md bg-gradient-to-r from-[#672280] to-[#A626D3]">Get a new meme image 🖼️</button>
             </form>
-            { memeImage ? <img className='w-full mt-5' src={memeImage} alt="meme image" /> : ''}
+            { randomImage ? <img className='w-full mt-5' src={randomImage} alt="meme image" /> : ''}
         </main>
     )
 }
