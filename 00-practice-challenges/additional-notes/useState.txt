@@ -1,0 +1,90 @@
+useState
+
+React doesn't watch local variable changes, that's why React uses a Hook called 'useState'
+
+
+We can use it in two ways:
+
+1. By importing it first, like this
+    import React, { useState } from "react"
+2 or by expliicitly defining it like this: React.useState()
+
+
+useState() when logged, will return 2 values: [undefined, f()]
+(I'll discuss more later).
+
+/////
+Let's dive more into more simple usage of it.
+inside the useState method, is the initial variable. 
+    -> useState("Hello") : Hello serves as the intiial variable
+
+    One simple example of useState is this:
+
+    const result = React.useState("Hello")
+    console.log(result)
+    return(
+        <div>
+            <h1>Is state important to know?</h1>
+            <p>{ result[0] }</p>
+        </div>
+    )
+
+    In the code above, it doesn't just directly state "Hello" in the paragraph, 
+    but rather use state with an initialized value. 
+
+    The initial value is then used by calling the variable in the paragraph like this '{result}', in that way, 
+    when you want to change it, let's say there's a user input, then youll take the input, 
+    put it in a variable and decides to use it
+
+    const inputWord = "something"
+    {inputWord} 
+
+    It won't be logged, because of how React works.
+
+    but if you use one of React's hook 'useState'
+
+    const inputWord = React.useState("something");
+    even if you change the input, it will be rendered because of the hook. 
+
+===========================================================
+Now, into a more complex.
+
+    Going back to one of the fundamentals of JS, React uses "array destructuring" for the  [undefined, f()].
+
+    const [result, func] = React.useState("Yes");
+    
+    In that way, we can have custom name for it and not refer to it as an Object. 
+
+/////
+Changing state
+
+    the function serves as a "state setter", the one that changes the value of the first variable. 
+
+
+    export default function App() {
+    const [isImportant, func] = React.useState("Yes")
+
+    /**
+     * Challenge: 
+     * 1. Create a function called `handleClick` that runs
+     *    setIsImportant("No")
+     * 2. add a click event listener to the div.state--value
+     *    that runs `handleClick` when the div is clicked.
+     */
+
+
+    const handleClick = () => setIsImportant("No")
+
+    return (
+        <div className="state">
+            <h1 className="state--title">Is state important to know?</h1>
+            <div onClick={handleClick} className="state--value">
+                <h1>{isImportant}</h1>
+            </div>
+        </div>
+        )
+    }
+
+    The main idea is that, we call the function which is setIsImporant, to handle the changes which then will modify the value of the first variable in the useState destructured.
+
+
