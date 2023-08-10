@@ -1,0 +1,83 @@
+Box.js
+
+```
+import React from "react"
+
+export default function Box(props) {
+const styles = {
+	backgroundColor: props.on ? "#222222" : "transparent"
+}
+
+return (
+	<div
+		style={styles}
+		className="box"
+		onClick={()=>props.toggle(props.id)}>
+	</div>
+)}
+```
+
+Now, since we want to individually log the ID for each box every time we click it, we pass the following to the ` <div> </div> ` element:
+
+Let's break this: ` onClick={() => props.toggle(props.id)} ` 
+- ` onClick={...} ` : handles the click event. every time the div is clicked, this function will run as well.
+- ` () => props.toggle(props.id) ` : this is an inline arrow function, this one is used together with the click event handler. 
+	- Within the arrow function we have the following:
+		- ` props.toggle(props.id) ` -> this part calls he ` toggle ` function passed as props to the ` Box ` component
+		- the `props.id` part means it's passing the `id` prop of the `Box` component to the `toggle` function.
+
+When we call the Box to the App.js it should be like this
+
+```
+import React from "react"
+import boxes from "./boxes"
+import Box from "./Box"
+
+export default function App() {
+
+	const [squares, setSquares] = React.useState(boxes)
+
+	function toggle(id) {
+		console.log(id)
+	}
+
+	const squareElements = squares.map(square => (
+		<Box
+			key={square.id}
+			on={square.on}
+			toggle={()=>toggle(square.id)}
+		/>
+	))
+
+return (
+	<main>
+		{squareElements}
+	</main>
+)}
+```
+
+
+There are two ways we can define the `<Box />` component
+
+1.
+
+The `id` is explicitly associated with the `toggle` function within the `map` function, making the code more clear about the purpose of the `id` in the click event.
+```
+		<Box
+			key={square.id}
+			on={square.on}
+			toggle={()=>toggle(square.id)}
+		/>
+```
+
+2.
+- The `id` is passed as a separate prop to the `Box` component, and the `toggle` function is passed as a prop without any modification.
+- The `toggle` function can be invoked directly in the `Box` component, referencing the `id` from the props
+-
+```
+		<Box
+			key={square.id}
+			id={sqaure.id}
+			on={square.on}
+			toggle={toggle}
+		/>
