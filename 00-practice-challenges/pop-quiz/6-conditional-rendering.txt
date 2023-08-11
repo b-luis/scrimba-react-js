@@ -1,0 +1,24 @@
+1. What is "conditional rendering"?
+
+    We render something based on whether it is truthy or falsy.
+
+    Scrimba Answer: When we want to only sometimes display something on the page based on a condition of some sort
+
+2. When would you use &&?
+
+    If you want to display something that satisfies a TRUTHY condition.
+
+    Scrimba Answer: When you want to either display something or NOT display it.
+
+3. When would you use a ternary?
+
+    If you want to display either one of the condition.
+
+    Scrimba Answer: When you need to decide which thing among 2 options to display
+
+4. What if you need to decide between > 2 options on
+   what to display?
+
+   Just use the good old way if..else.
+
+
