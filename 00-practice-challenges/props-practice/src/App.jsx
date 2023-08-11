@@ -8,13 +8,12 @@ import jokesData from './js/jokesData.js'
 */
 
 function App() {
-  
+
   return (
     <>
       {
         jokesData.map((joke) => (
           <Joke 
-            key={joke.id}
             setup={joke.setup}
             punchline={joke.punchline}/>
         ))
