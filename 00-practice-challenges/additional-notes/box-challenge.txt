@@ -1,0 +1,92 @@
+Another challenge:
+
+Use state setter to modify the current square in the array. let's say this is the initial data,
+
+```boxes.js
+export default function {
+	id: 1,
+	on: true
+}
+```
+
+We want to toggle the ` on `  property to ` true ` if ` false ` then ` false ` to ` true `.  So when we click each boxes, the black indicates the on is `true` otherwise, it's `false`.
+
+
+current solution
+
+```
+import React from "react"
+import boxes from "./boxes"
+import Box from "./Box"
+
+export default function App() {
+    const [squares, setSquares] = React.useState(boxes)import React from "react"
+import boxes from "./boxes"
+import Box from "./Box"
+
+export default function App() {
+    const [squares, setSquares] = React.useState(boxes)
+
+	function toggle(){
+		let newSquares = []
+		setSquares(prevSquares => {
+			for (const i in prevSquare) {
+				prevSquare[i].id === id 
+				? newSquares.push(
+					{...prevSquare, on: !prevSquare[id].on}
+				)
+				: newSquares.push(prevSquare[i])
+			}
+			return newSquares
+		})
+	}
+```
+
+So what's happening above is we take the state setter ` setSquares ` to change the current value of the state without directly modifying it. How's that happen?
+
+Notice that we defined a new array 
+
+` let newSquares = [] `
+
+This is where we push the newly changed state. In order to achieve the challenge to **not DIRECTLY** mutate the state, which is the squares variable, we need to define a new array to save the changes.
+
+There's also another approach.
+
+map() method can be used in this scenario.
+
+```
+setSquares(prevSquare => (
+    prevSquare.map(square => 
+        (id === square.id) 
+            ? {...square, on: !square.on}
+            : square
+    )
+))
+```
+
+
+In this code:
+
+1. ` prevSquare ` is the previous state of the array you're working with (the current value of the squares state variable).
+
+2. ` prevSquare.map(...) ` applies the given function to each element in the prevSquare array, and for each element (each "square" object), it performs the conditional check to determine whether to update the on property or keep the square unchanged.
+
+3. `square` represents each individual "square" object in the array during each iteration of the map operation.
+
+Which leads us to a conclusion that, map method is easy to implement since we don't need to get the index, but instead in map, it traverses through the object, you just need to specify the property. For ex. ` square.on ` being the `square` is the object, `on` is the property. 
+
+Another example
+
+```
+const originalArray = [
+  { id: 1, name: "Alice", age: 30 },
+  { id: 2, name: "Bob", age: 25 },
+  { id: 3, name: "Charlie", age: 40 },
+];
+
+const updatedArray = originalArray.map((item) =>
+  item.id === 2 ? { ...item, age: 26 } : item
+);
+```
+
+` age ` property is updated for the object ` id ` equal to 2. The ` map ` method creates a new array with the desired updated while leaving the original ` originalArray ` unchanged. 
