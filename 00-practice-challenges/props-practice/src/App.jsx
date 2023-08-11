@@ -8,13 +8,17 @@ import jokesData from './js/jokesData.js'
 */
 
 function App() {
-  const jokeElements = jokesData.map((joke) => {
-    return <Joke  
-              setup={joke.setup}
-              punchline={joke.punchline}/> })
+  
   return (
     <>
-      {jokeElements}
+      {
+        jokesData.map((joke) => (
+          <Joke 
+            key={joke.id}
+            setup={joke.setup}
+            punchline={joke.punchline}/>
+        ))
+      }
       {/* <Joke 
         setup ="I got my daughter a fridge for her birthday."
         punchline="I can't wait to see her face light up when she opens it"/>
