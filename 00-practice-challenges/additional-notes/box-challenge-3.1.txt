@@ -1,0 +1,29 @@
+import React from "react"
+
+export default function Box(props) {
+    /**
+     * Challenge: Create state controlling whether
+     * this box is "on" or "off". Use the incoming
+     * `props.on` to determine the initial state.
+     * 
+     * Create an event listener so when the box is clicked,
+     * it toggles from "on" to "off".
+     * 
+     * Goal: clicking each box should toggle it on and off.
+     */
+    const [on, setOn] = React.useState(props.on)
+    
+    const toggle = () => {
+        setOn(prevState => !prevState)
+    }
+    
+    const styles = {
+        backgroundColor: on ? "#222222" : "transparent"
+    }
+    
+    return (
+        <div onClick={toggle} style={styles} className="box"></div>
+    )
+}
+
+The code above demonstrates a type of state called "local state" or "component-level state" which only exists in the Box comoponent. Meaning, each instance of the Box component will have its own separate box.
