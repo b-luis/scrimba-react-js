@@ -1,0 +1,39 @@
+import React from "react"
+import boxes from "./boxes"
+import Box from "./Box"
+
+export default function App() {
+    const [squares, setSquares] = React.useState(boxes)
+    
+    /**
+     * Challenge: Create a toggle() function that logs
+     * "clicked!" to the console
+     * 
+     * Pass that function down to each of the Box components
+     * and set it up so when they get clicked it runs the function
+     */
+
+    // previous solution
+    /*
+        const toggle = () => console.log('clicked!');
+    */
+    
+    // current solution, also toggles the boxes color
+    const toggle = (id) => setSquares(prevSquare => 
+        prevSquare.map((box, index) => id === ++index ? {...box, on: !box.on} : box
+    ))
+    
+    const squareElements = squares.map(square => (
+        <Box 
+            onClick ={()=>toggle(square.id)}
+            key={square.id} 
+            on={square.on} 
+        />
+    ))
+    
+    return (
+        <main>
+            {squareElements}
+        </main>
+    )
+}
