@@ -1,0 +1,47 @@
+Having multiple states, to watch for form input might not come in handy when you have a lot of inputs.
+
+so the question is, how do we improve this? 
+
+We can use an Object as a default value in our state.
+
+Example:
+
+import React from "react"
+
+export default function Form() {
+    const [formData, setFormData] = React.useState(
+        {firstName: "", lastName: ""} # default value
+    )
+    
+    function handleChange(event) {
+        // updating the state
+        // NOTE: We need to know the previous value of state
+        setFormData(prevFormData => {
+            return {
+                ...prevFormData,
+                [event.target.name]: event.target.value
+            }
+        })
+    }
+    
+    return (
+        <form>
+            <input
+                type="text"
+                placeholder="First Name"
+                onChange={handleChange}
+                name="firstName"     
+            />
+            <input
+                type="text"
+                placeholder="Last Name"
+                onChange={handleChange}
+                name="lastName"
+            />
+        </form>
+    )
+}
+
+the name attributes of the two inputs SHOULD be the same with the properties within the default Object/value. 
+
+
