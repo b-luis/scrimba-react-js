@@ -1,0 +1,54 @@
+import React from "react"
+
+export default function Form() {
+    const [formData, setFormData] = React.useState(
+        {firstName: "", lastName: "", email: ""}
+    )
+    
+    function handleChange(event) {
+        setFormData(prevFormData => {
+            return {
+                ...prevFormData,
+                [event.target.name]: event.target.value
+            }
+        })
+    }
+    
+    return (
+        <form>
+            <input
+                type="text"
+                placeholder="First Name"
+                onChange={handleChange}
+                name="firstName"
+                value={formData.firstName}
+            />
+            <input
+                type="text"
+                placeholder="Last Name"
+                onChange={handleChange}
+                name="lastName"
+                value={formData.lastName}
+            />
+            <input
+                type="email"
+                placeholder="Email"
+                onChange={handleChange}
+                name="email"
+                value={formData.email}
+            />
+        </form>
+    )
+}
+
+Putting a value attribute for each input ensures that input fields are controlled by React's state. 
+
+This means that the input's value is not only displayed but also updated based on the state, and any changes to the input are managed through the component's state.
+
+But why do we need to define the value?
+
+1. Syncing input with state:
+    Defining the value prop with the corresponding value from the state ('formData.firstName, formData.lastName, formData.email), you are esentially telling React to make these inputs controlled by the state
+
+You may ask, but we already defined a function that changes the value of the state?
+- well when the component is initially rendered, the value attribute ensures that  input fields display the right STARTING VALUES from the beginning. 
