@@ -33,10 +33,15 @@ function Meme(){
         randomImage: 'http://i.imgflip.com/1bij.jpg'
     })
 
+     // * Destructure the meme state object to access the randomImage value
+     const { topText, bottomText, randomImage} = meme
+
+
+
     const [allMemeImages, setMemeImage] = useState(memesData);
     
     const getMemeImage = () => {
-        const memesArray = memesData.data.memes
+        const memesArray = allMemeImages.data.memes
         const randomNumber = Math.floor(Math.random() * memesArray.length)
         const newMemeImageURL = memesArray[randomNumber].url;
         // for debugging purposes:
@@ -45,8 +50,6 @@ function Meme(){
         setMeme(prevMeme => ({...prevMeme, randomImage: newMemeImageURL}));
     }
  
-    // * Destructure the meme state object to access the randomImage value
-    const { topText, bottomText, randomImage} = meme
 
     const handleChange=(event) => {
         const {name, value} = event.target
