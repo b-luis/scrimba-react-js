@@ -36,16 +36,15 @@ function Meme(){
     useEffect(() => {
         fetch("https://api.imgflip.com/get_memes")
             .then(res => res.json())
-            .then(data => setAllMemes(data))
+            .then(data => setAllMemes(data.data.memes))
     }, [])
 
      // * Destructure the meme state object to access the randomImage value
     const { topText, bottomText, randomImage } = meme
     
     const getMemeImage = () => {
-        const memesArray = allMemes.data.memes
-        const randomNumber = Math.floor(Math.random() * memesArray.length)
-        const newMemeImageURL = memesArray[randomNumber].url;
+        const randomNumber = Math.floor(Math.random() * allMemes.length)
+        const newMemeImageURL = allMemes[randomNumber].url;
         // for debugging purposes:
         // console.log('Current memeImage:', memeImage);
         // console.log('New memeImage:', newMemeImage);
