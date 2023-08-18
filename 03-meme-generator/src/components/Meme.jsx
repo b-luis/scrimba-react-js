@@ -36,8 +36,6 @@ function Meme(){
      // * Destructure the meme state object to access the randomImage value
      const { topText, bottomText, randomImage} = meme
 
-
-
     const [allMemeImages, setMemeImage] = useState(memesData);
     
     const getMemeImage = () => {
