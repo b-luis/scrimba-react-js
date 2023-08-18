@@ -3,24 +3,6 @@ import React, { useState, useEffect } from 'react';
 
 function Meme(){
 
-    /**
-     * TODO: 
-     * * Challenge: Update our state to save the meme-related
-     * * data as an object called `meme`. It should have the
-     * * following 3 properties:
-     * * topText, bottomText, randomImage.
-     * 
-     * * The 2 text states can default to empty strings for now,
-     * * amd randomImage should default to "http://i.imgflip.com/1bij.jpg"
-     * 
-     * * Next, create a new state variable called `allMemeImages`
-     * * which will default to `memesData`, which we imported above
-     * 
-     * * Lastly, update the `getMemeImage` function and the markup 
-     * * to reflect our newly reformed state object and array in the
-     * * correct way.
-     */
-
     //* everytime we click the button, it should return a random image
     //* from the memesData array to replace the current random image
     //* so in order to do that, we must use the state setter to update the
@@ -43,7 +25,6 @@ function Meme(){
      * from using `fetch`. We'll learn why after this challenge.
      */
 
-
     const [meme, setMeme] = useState({
         topText: '',
         bottomText: '',
@@ -59,7 +40,7 @@ function Meme(){
     }, [])
 
      // * Destructure the meme state object to access the randomImage value
-    const { topText, bottomText, randomImage} = meme
+    const { topText, bottomText, randomImage } = meme
     
     const getMemeImage = () => {
         const memesArray = allMemes.data.memes
