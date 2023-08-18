@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import memesData from '../data/memesData.js'
+// import memesData from '../data/memesData.js'
 
 function Meme(){
 
@@ -42,12 +42,7 @@ function Meme(){
      * Instead, use `.then()` blocks to resolve the promises
      * from using `fetch`. We'll learn why after this challenge.
      */
-    
-    useEffect(() => {
-        fetch("https://api.imgflip.com/get_memes")
-            .then(res => res.json())
-            .then(data => setAllMemes(data))
-    }, [])
+
 
     const [meme, setMeme] = useState({
         topText: '',
@@ -55,13 +50,19 @@ function Meme(){
         randomImage: 'http://i.imgflip.com/1bij.jpg'
     })
 
-     // * Destructure the meme state object to access the randomImage value
-     const { topText, bottomText, randomImage} = meme
+    const [allMemes, setAllMemes] = useState([])
+    
+    useEffect(() => {
+        fetch("https://api.imgflip.com/get_memes")
+            .then(res => res.json())
+            .then(data => setAllMemes(data))
+    }, [])
 
-    const [allMemeImages, setMemeImage] = useState(memesData);
+     // * Destructure the meme state object to access the randomImage value
+    const { topText, bottomText, randomImage} = meme
     
     const getMemeImage = () => {
-        const memesArray = allMemeImages.data.memes
+        const memesArray = allMemes.data.memes
         const randomNumber = Math.floor(Math.random() * memesArray.length)
         const newMemeImageURL = memesArray[randomNumber].url;
         // for debugging purposes:
@@ -70,7 +71,6 @@ function Meme(){
         setMeme(prevMeme => ({...prevMeme, randomImage: newMemeImageURL}));
     }
  
-
     const handleChange=(event) => {
         const {name, value} = event.target
         setMeme(prevMeme => ({
