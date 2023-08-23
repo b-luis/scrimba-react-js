@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // import memesData from '../data/memesData.js'
 
 function Meme(){
@@ -33,13 +33,24 @@ function Meme(){
 
     const [allMemes, setAllMemes] = useState([])
     
-    useEffect(() => {
-        fetch("https://api.imgflip.com/get_memes")
-            .then(res => res.json())
-            .then(data => setAllMemes(data.data.memes))
-    }, [])
+    // useEffect(() => {
+    //     fetch("https://api.imgflip.com/get_memes")
+    //         .then(res => res.json())
+    //         .then(data => setAllMemes(data.data.memes))
+    // }, [])
 
-     // * Destructure the meme state object to access the randomImage value
+    // * Converted promise chaining to async/await function
+    useEffect(() => {
+        async function getMemes() {
+            const res = await fetch("https://api.imgflip.com/get_memes");
+            const data = await res.json();
+            setAllMemes(data);
+        }
+        getMemes();
+
+    }, []);
+
+    // * Destructure the meme state object to access the randomImage value
     const { topText, bottomText, randomImage } = meme
     
     const getMemeImage = () => {
@@ -50,7 +61,8 @@ function Meme(){
         // console.log('New memeImage:', newMemeImage);
         setMeme(prevMeme => ({...prevMeme, randomImage: newMemeImageURL}));
     }
- 
+    
+    // * Handling input data
     const handleChange=(event) => {
         const {name, value} = event.target
         setMeme(prevMeme => ({
@@ -87,7 +99,11 @@ function Meme(){
                 // *    https://stackoverflow.com/questions/73119592/image-not-showing-using-usestate-hook-in-react 
                 // *    https://react.dev/reference/react-dom/components/common#react-event-object-methods
                 }
-                <button onClick={(e) => {e.preventDefault(); getMemeImage()}} className="p-2 w-full rounded-md bg-gradient-to-r from-[#672280] to-[#A626D3]">Get a new meme image 🖼️</button>
+                <button 
+                    onClick={(e) => {e.preventDefault(); getMemeImage()}} 
+                    className="p-2 w-full rounded-md bg-gradient-to-r from-[#672280] to-[#A626D3]">
+                    Get a new meme image 🖼️
+                </button>
             </form>
             <div className='relative'>
                 <img className='w-full mt-5 relative' src={randomImage} alt="meme image"/>
