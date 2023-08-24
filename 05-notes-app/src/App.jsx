@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
-import { data } from "./src/data/data.jsx"
+import { data } from "./data/data.jsx"
 import Split from "react-split"
 import {nanoid} from "nanoid"
 
