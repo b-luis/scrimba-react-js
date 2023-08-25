@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
 import { data } from "./data/data.jsx"
@@ -6,7 +6,22 @@ import Split from "react-split"
 import {nanoid} from "nanoid"
 
 export default function App() {
-    const [notes, setNotes] = useState([])
+
+    /**
+     * Challenge:
+     * 1. Every time the `notes` array changes, save it 
+     *    in localStorage. You'll need to use JSON.stringify()
+     *    to turn the array into a string to save in localStorage.
+     * 2. When the app first loads, initialize the notes state
+     *    with the notes saved in localStorage. You'll need to
+     *    use JSON.parse() to turn the stringified array back
+     *    into a real JS array.
+     */
+
+    // 2.
+    // Sets an empty array if the first condition is false so that it wont
+    // return an undefined on every render or break the code.
+    const [notes, setNotes] = useState(localStorage.getItem("notes") || [])
     const [currentNoteId, setCurrentNoteId] = useState(
         (notes[0] && notes[0].id) || ""
     )
@@ -20,6 +35,15 @@ export default function App() {
         setCurrentNoteId(newNote.id)
     }
     
+    // 1.
+    // Storage: {notes: "[]"}
+    // Storage {notes: "[{"id":"CxFNwEtYKi57DRBbBKxRg..."}
+    // will not remove created notes on refresh
+    useEffect(() => localStorage("notes", JSON.stringify(notes)), [notes])
+
+    // ! FOR DEBUGGING PURPOSES
+    console.log(localStorage);
+
     function updateNote(text) {
         setNotes(oldNotes => oldNotes.map(oldNote => {
             return oldNote.id === currentNoteId
