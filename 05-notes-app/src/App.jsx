@@ -21,7 +21,7 @@ export default function App() {
     // 2.
     // Sets an empty array if the first condition is false so that it wont
     // return an undefined on every render or break the code.
-    const [notes, setNotes] = useState(localStorage.getItem("notes") || [])
+    const [notes, setNotes] = useState(() => localStorage.getItem("notes") || [])
     const [currentNoteId, setCurrentNoteId] = useState(
         (notes[0] && notes[0].id) || ""
     )
@@ -34,6 +34,17 @@ export default function App() {
         setNotes(prevNotes => [newNote, ...prevNotes])
         setCurrentNoteId(newNote.id)
     }
+
+    // ? FOR DEMONSTRATION OF LAZY STATE INITIALIZATION
+    // ? ----------------------------------------------
+    // ? This can be useful when the initial value depends on some dynamic factors, 
+    // ? like user preferences, data fetching, or other calculations. 
+    // ? By providing a function, you ensure that the initialization logic is only executed once 
+    // ? when the component is first rendered.
+
+    // const [state, setState] = React.useState(
+    //     () => console.log("State initialization")
+    // )
     
     // 1.
     // Storage: {notes: "[]"}
