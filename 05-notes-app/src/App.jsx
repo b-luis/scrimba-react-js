@@ -1,33 +1,40 @@
 import { useState, useEffect } from "react"
 import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
-import { data } from "./data/data.jsx"
 import Split from "react-split"
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid"
+import { onSnapshot } from "firebase/firestore"
+import { notesCollection } from "./services/firebaseConfig"
 
 export default function App() {
 
-    /**
-     * Challenge:
-     * 1. Every time the `notes` array changes, save it 
-     *    in localStorage. You'll need to use JSON.stringify()
-     *    to turn the array into a string to save in localStorage.
-     * 2. When the app first loads, initialize the notes state
-     *    with the notes saved in localStorage. You'll need to
-     *    use JSON.parse() to turn the stringified array back
-     *    into a real JS array.
-     */
-
-    // 2.
-    // Sets an empty array if the first condition is false so that it wont
-    // return an undefined on every render or break the code.
-    const [notes, setNotes] = useState(() => localStorage.getItem("notes") || [])
-    const [currentNoteId, setCurrentNoteId] = useState(
-        (notes[0]?.id) || ""
+    const [notes, setNotes] = useState(() => [])
+    const [currentNoteId, setCurrentNoteId] = useState((notes[0]?.id) || ""
     )
 
     const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
     
+    // useEffect(() => {
+    //     localStorage.setItem("notes", JSON.stringify(notes))
+    // }, [notes])
+
+    // web hook, so it's important to unsubscribe to avoid memory leaks
+    useEffect(() => {
+        // ? onSnapshot
+        // ? imagine you have a camera, and take a photo on a given time
+        // ? whenever something changes, we get up-to-date data
+        const unsubscribe = onSnapshot(notesCollection, (snapshot) => {
+            // Sync up our local notes array with the snapshot data
+            const notesArr = snapshot.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            setNotes(notesArr)
+        })
+        // cleanup sideeffects
+        return unsubscribe
+    }, [])
+
     function createNewNote() {
         const newNote = {
             id: nanoid(),
@@ -52,15 +59,7 @@ export default function App() {
     // Storage: {notes: "[]"}
     // Storage {notes: "[{"id":"CxFNwEtYKi57DRBbBKxRg..."}
     // will not remove created notes on refresh
-    useEffect(() => localStorage("notes", JSON.stringify(notes)), [notes])
-
-    // ! FOR DEBUGGING PURPOSES
-    console.log(localStorage);
-
-    /**
-     * Challenge: When the user edits a note, reposition
-     * it in the list of notes to the top of the list
-     */
+    
     function updateNote(text) {
         setNotes(oldNotes => {
             const updatedNotes = oldNotes.map(oldNote => {
@@ -68,22 +67,11 @@ export default function App() {
                     ? { ...oldNote, body: text }
                     : oldNote
             });
+            // reposition when somebody updates the text
             return [updatedNotes.find(note=>note.id===currentNoteId), 
                     ...updatedNotes.filter(note=> note.id !== currentNoteId)]
         });
     }
-
-    /**
-     * Challenge: complete and implement the deleteNote function
-     * 
-     * Hints: 
-     * 1. What array method can be used to return a new
-     *    array that has filtered out an item based 
-     *    on a condition?
-     * 2. Notice the parameters being based to the function
-     *    and think about how both of those parameters
-     *    can be passed in during the onClick event handler
-     */
 
     function deleteNote(event, noteId) {
         event.stopPropagation();
