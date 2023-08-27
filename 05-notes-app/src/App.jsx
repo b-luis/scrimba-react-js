@@ -12,21 +12,17 @@ import {
     Timestamp
 } from "firebase/firestore"
 
-
 export default function App() {
 
-    const [notes, setNotes] = useState(() => [])
-    const [currentNoteId, setCurrentNoteId] = useState("")
+    const [notes, setNotes] = useState(() => []);
+    const [currentNoteId, setCurrentNoteId] = useState("");
 
     const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
     
-    // web hook, so it's important to unsubscribe to avoid memory leaks
+    // ! Web hooks are functions that run when a component mounts or unmounts
     useEffect(() => {
-        // ? onSnapshot
-        // ? imagine you have a camera, and take a photo on a given time
-        // ? whenever something changes, we get up-to-date data
         const unsubscribe = onSnapshot(notesCollection, (snapshot) => {
-            // Sync up our local notes array with the snapshot data
+            // ! Sync up our local notes array with the snapshot data
             const notesArr = snapshot.docs.map(doc => (
                 {...doc.data(),
                 id: doc.id}
@@ -43,28 +39,30 @@ export default function App() {
     }, [notes])
 
     async function createNewNote() {
+        // ! NOTE: we don't need to add id to the newNote object, because firebase will generate it for us
         const newNote = {
-            // ! will be managed by firebase
-            // id: nanoid(),
             body: "# Type your markdown note's title here",
             createdAt: Timestamp.fromDate(new Date()),
             updatedAt: Timestamp.fromDate(new Date())
         }
+        // ! addDoc returns a promise, so we need to await it
         const newNoteRef = await addDoc(notesCollection, newNote)
         setCurrentNoteId(newNoteRef.id)
     }
     
     async function updateNote(text) {
         const docRef = doc(db, "notes", currentNoteId)
-        await setDoc(docRef, { body: text, updatedAt: Timestamp.fromDate(new Date())}, {merge: true})
+        // ! setDoc will overwrite the entire document, so we need to use merge: true to only update the body and updatedAt fields
+        await setDoc(docRef, { 
+            body: text, updatedAt: Timestamp.fromDate(new Date()) }, { merge: true });
     }
 
     async function deleteNote(noteId) { 
-        const docRef = doc(db, "notes", noteId)
-        await deleteDoc(docRef)
+        // ! deleteDoc accepts a document reference and deletes it
+        // ? docRef is a reference to the document we want to delete. Tt accepts the collection name and the document id
+        const docRef = doc(db, "notes", noteId);
+        await deleteDoc(docRef);
     }
-
-    console.log(notes)
     
     return (
         <main>
