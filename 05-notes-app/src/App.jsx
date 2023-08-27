@@ -16,21 +16,26 @@ export default function App() {
 
     const [notes, setNotes] = useState(() => []);
     const [currentNoteId, setCurrentNoteId] = useState("");
+    const [tempNoteText, setTempNoteText] = useState("");
 
-    const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
-
-    /**
+     /**
      * Challenge:
-     * 1. ✅ Add createdAt and updatedAt properties to the notes
-     *    When a note is first created, set the `createdAt` and `updatedAt`
-     *    properties to `Date.now()`. Whenever a note is modified, set the
-     *    `updatedAt` property to `Date.now()`.
-     * 
-     * 2. Create a new `sortedNotes` array (doesn't need to be saved 
-     *    in state) that orders the items in the array from 
-     *    most-recently-updated to least-recently-updated.
-     *    This may require a quick Google search.
+     * 1. Set up a new state variable called `tempNoteText`. Initialize 
+     *    it as an empty string
+     * 2. Change the Editor so that it uses `tempNoteText` and 
+     *    `setTempNoteText` for displaying and changing the text instead
+     *    of dealing directly with the `currentNote` data.
+     * 3. Create a useEffect that, if there's a `currentNote`, sets
+     *    the `tempNoteText` to `currentNote.body`. (This copies the
+     *    current note's text into the `tempNoteText` field so whenever 
+     *    the user changes the currentNote, the editor can display the 
+     *    correct text.
+     * 4. TBA
      */
+
+    const currentNote = 
+        notes.find(note => note.id === currentNoteId) 
+        || notes[0]
 
     const sortedNotes = notes.sort((a, b) => b.updatedAt - a.updatedAt);
     
@@ -39,11 +44,11 @@ export default function App() {
         const unsubscribe = onSnapshot(notesCollection, (snapshot) => {
             // ! Sync up our local notes array with the snapshot data
             const notesArr = snapshot.docs.map(doc => (
-                {...doc.data(),
-                id: doc.id}
+                {...doc.data(), id: doc.id}
             ))
             setNotes(notesArr)
         })
+
         return unsubscribe
     }, [])
 
@@ -52,6 +57,18 @@ export default function App() {
             setCurrentNoteId(notes[0]?.id)
         }
     }, [notes])
+
+    //  * Create a useEffect that, if there's a `currentNote`, sets
+    //  *    the `tempNoteText` to `currentNote.body`. (This copies the
+    //  *    current note's text into the `tempNoteText` field so whenever 
+    //  *    the user changes the currentNote, the editor can display the 
+    //  *    correct text.
+
+    useEffect(() => {
+        if (currentNote) {
+            setTempNoteText(currentNote.body)
+        }
+    }, [currentNote])
 
     async function createNewNote() {
         // ! NOTE: we don't need to add id to the newNote object, because firebase will generate it for us
@@ -63,7 +80,22 @@ export default function App() {
         // ! addDoc returns a promise, so we need to await it
         const newNoteRef = await addDoc(notesCollection, newNote)
         setCurrentNoteId(newNoteRef.id)
+        console.log("New note added with ID:", newNoteRef.id);
     }
+
+    /**
+     * Create an effect that runs any time the tempNoteText changes
+     * Delay the sending of the request to Firebase
+     *  uses setTimeout
+     * use clearTimeout to cancel the timeout
+     */
+
+    // ! DEBOUNCING
+    // waits 500 milliseconds before it updates the firebase
+    useEffect(()=>{
+        const timeoutId = setTimeout(() => updateNote(tempNoteText), 500)
+        return () => clearTimeout(timeoutId)
+    }, [tempNoteText])
     
     async function updateNote(text) {
         const docRef = doc(db, "notes", currentNoteId)
@@ -99,8 +131,8 @@ export default function App() {
                     deleteNote={deleteNote}
                 />
                 <Editor 
-                    currentNote={currentNote} 
-                    updateNote={updateNote} 
+                    tempNoteText={tempNoteText} 
+                    setTempNoteText={setTempNoteText} 
                 />
             </Split>
             :
