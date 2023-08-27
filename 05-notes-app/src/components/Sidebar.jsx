@@ -1,17 +1,20 @@
 export default function Sidebar(props) {
+    // eslint-disable-next-line react/prop-types
     const noteElements = props.notes.map((note, index) => (
         <div key={note.id}>
             <div
                 className={`title ${
+                    // eslint-disable-next-line react/prop-types
                     note.id === props.currentNote.id ? "selected-note" : ""
                 }`}
+                // eslint-disable-next-line react/prop-types
                 onClick={() => props.setCurrentNoteId(note.id)}
             >
                 <h4 className="text-snippet">{note.body.split("\n")[0]}</h4>
                 <button 
                     className="delete-btn"
-                    // Your onClick event handler here
-                    onClick={(e)=>props.deleteNote(e, note.id)}
+                    // eslint-disable-next-line react/prop-types
+                    onClick={()=>props.deleteNote(note.id)}
                 >
                     <i className="gg-trash trash-icon"></i>
                 </button>

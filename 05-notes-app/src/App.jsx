@@ -2,22 +2,24 @@ import { useState, useEffect } from "react"
 import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
 import Split from "react-split"
-import { nanoid } from "nanoid"
-import { onSnapshot } from "firebase/firestore"
-import { notesCollection } from "./services/firebaseConfig"
+import { notesCollection, db } from "./services/firebaseConfig"
+import { 
+    onSnapshot, 
+    addDoc, 
+    doc, 
+    deleteDoc, 
+    setDoc,
+    Timestamp
+} from "firebase/firestore"
+
 
 export default function App() {
 
     const [notes, setNotes] = useState(() => [])
-    const [currentNoteId, setCurrentNoteId] = useState((notes[0]?.id) || ""
-    )
+    const [currentNoteId, setCurrentNoteId] = useState("")
 
     const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
     
-    // useEffect(() => {
-    //     localStorage.setItem("notes", JSON.stringify(notes))
-    // }, [notes])
-
     // web hook, so it's important to unsubscribe to avoid memory leaks
     useEffect(() => {
         // ? onSnapshot
@@ -25,59 +27,44 @@ export default function App() {
         // ? whenever something changes, we get up-to-date data
         const unsubscribe = onSnapshot(notesCollection, (snapshot) => {
             // Sync up our local notes array with the snapshot data
-            const notesArr = snapshot.docs.map(doc => ({
-                ...doc.data(),
-                id: doc.id
-            }))
+            const notesArr = snapshot.docs.map(doc => (
+                {...doc.data(),
+                id: doc.id}
+            ))
             setNotes(notesArr)
         })
-        // cleanup sideeffects
         return unsubscribe
     }, [])
 
-    function createNewNote() {
-        const newNote = {
-            id: nanoid(),
-            body: "# Type your markdown note's title here"
+    useEffect(() => {
+        if (!currentNoteId) {
+            setCurrentNoteId(notes[0]?.id)
         }
-        setNotes(prevNotes => [newNote, ...prevNotes])
-        setCurrentNoteId(newNote.id)
+    }, [notes])
+
+    async function createNewNote() {
+        const newNote = {
+            // ! will be managed by firebase
+            // id: nanoid(),
+            body: "# Type your markdown note's title here",
+            createdAt: Timestamp.fromDate(new Date()),
+            updatedAt: Timestamp.fromDate(new Date())
+        }
+        const newNoteRef = await addDoc(notesCollection, newNote)
+        setCurrentNoteId(newNoteRef.id)
     }
-
-    // ? FOR DEMONSTRATION OF LAZY STATE INITIALIZATION
-    // ? ----------------------------------------------
-    // ? This can be useful when the initial value depends on some dynamic factors, 
-    // ? like user preferences, data fetching, or other calculations. 
-    // ? By providing a function, you ensure that the initialization logic is only executed once 
-    // ? when the component is first rendered.
-
-    // const [state, setState] = React.useState(
-    //     () => console.log("State initialization")
-    // )
     
-    // 1.
-    // Storage: {notes: "[]"}
-    // Storage {notes: "[{"id":"CxFNwEtYKi57DRBbBKxRg..."}
-    // will not remove created notes on refresh
-    
-    function updateNote(text) {
-        setNotes(oldNotes => {
-            const updatedNotes = oldNotes.map(oldNote => {
-                return oldNote.id === currentNoteId
-                    ? { ...oldNote, body: text }
-                    : oldNote
-            });
-            // reposition when somebody updates the text
-            return [updatedNotes.find(note=>note.id===currentNoteId), 
-                    ...updatedNotes.filter(note=> note.id !== currentNoteId)]
-        });
+    async function updateNote(text) {
+        const docRef = doc(db, "notes", currentNoteId)
+        await setDoc(docRef, { body: text, updatedAt: Timestamp.fromDate(new Date())}, {merge: true})
     }
 
-    function deleteNote(event, noteId) {
-        event.stopPropagation();
-        // my mistake is, i forgot im changing the state! beginner mistake lol. 
-        setNotes(notes.filter(note => note.id !== noteId))
+    async function deleteNote(noteId) { 
+        const docRef = doc(db, "notes", noteId)
+        await deleteDoc(docRef)
     }
+
+    console.log(notes)
     
     return (
         <main>
@@ -96,14 +83,10 @@ export default function App() {
                     newNote={createNewNote}
                     deleteNote={deleteNote}
                 />
-                {
-                    currentNoteId && 
-                    notes.length > 0 &&
-                    <Editor 
-                        currentNote={currentNote} 
-                        updateNote={updateNote} 
-                    />
-                }
+                <Editor 
+                    currentNote={currentNote} 
+                    updateNote={updateNote} 
+                />
             </Split>
             :
             <div className="no-notes">
@@ -115,7 +98,6 @@ export default function App() {
                     Create one now
                 </button>
             </div>
-            
         }
         </main>
     )

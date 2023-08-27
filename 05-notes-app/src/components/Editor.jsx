@@ -2,6 +2,7 @@ import { useState } from "react"
 import ReactMde from "react-mde"
 import Showdown from "showdown"
 
+// eslint-disable-next-line react/prop-types
 export default function Editor({ currentNote, updateNote }) {
     const [selectedTab, setSelectedTab] = useState("write")
 
@@ -15,7 +16,8 @@ export default function Editor({ currentNote, updateNote }) {
     return (
         <section className="pane editor">
             <ReactMde
-                value={currentNote.body}
+                // eslint-disable-next-line react/prop-types
+                value={currentNote?.body}
                 onChange={updateNote}
                 selectedTab={selectedTab}
                 onTabChange={setSelectedTab}
