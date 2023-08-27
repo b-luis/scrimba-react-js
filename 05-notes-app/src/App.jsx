@@ -23,8 +23,10 @@ export default function App() {
     // return an undefined on every render or break the code.
     const [notes, setNotes] = useState(() => localStorage.getItem("notes") || [])
     const [currentNoteId, setCurrentNoteId] = useState(
-        (notes[0] && notes[0].id) || ""
+        (notes[0]?.id) || ""
     )
+
+    const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
     
     function createNewNote() {
         const newNote = {
@@ -88,12 +90,6 @@ export default function App() {
         // my mistake is, i forgot im changing the state! beginner mistake lol. 
         setNotes(notes.filter(note => note.id !== noteId))
     }
- 
-    function findCurrentNote() {
-        return notes.find(note => {
-            return note.id === currentNoteId
-        }) || notes[0]
-    }
     
     return (
         <main>
@@ -107,7 +103,7 @@ export default function App() {
             >
                 <Sidebar
                     notes={notes}
-                    currentNote={findCurrentNote()}
+                    currentNote={currentNote}
                     setCurrentNoteId={setCurrentNoteId}
                     newNote={createNewNote}
                     deleteNote={deleteNote}
@@ -116,7 +112,7 @@ export default function App() {
                     currentNoteId && 
                     notes.length > 0 &&
                     <Editor 
-                        currentNote={findCurrentNote()} 
+                        currentNote={currentNote} 
                         updateNote={updateNote} 
                     />
                 }
