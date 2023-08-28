@@ -33,16 +33,10 @@ function App() {
 			})
 		);
 	};
-	/**
-	 * Challenge: Check the dice array for these winning conditions:
-	 * 1. All dice are held, and
-	 * 2. all dice have the same value
-	 *
-	 * If both conditions are true, set `tenzies` to true and log
-	 * "You won!" to the console
-	 */
 
 	useEffect(() => {
+		// ? reference:
+		// https://stackoverflow.com/questions/23604734/how-to-check-if-all-object-keys-has-false-values
 		const diceVal = Object.values(dice).every(
 			(die) => die.isHeld === true && die.value === die.value
 		);
