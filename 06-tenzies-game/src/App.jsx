@@ -65,6 +65,7 @@ function App() {
 	const { width, height } = useWindowSize();
 	return (
 		<main className="container__center rounded-md bg-slate-200 p-5 md:p-16">
+			{tenzies && <Confetti width={width} height={height} />}
 			<Header />
 			<div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5">
 				{displayDieEl}
@@ -75,7 +76,6 @@ function App() {
 			>
 				{tenzies ? "New Game" : "Roll"}
 			</button>
-			{tenzies ? <Confetti width={width} height={height} /> : ""}
 		</main>
 	);
 }
