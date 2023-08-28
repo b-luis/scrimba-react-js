@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Die, Header } from "../src/components";
 import { nanoid } from "nanoid";
 
 function App() {
+	/**
+	 * Challenge:
+	 * 1. Add new state called `tenzies`, default to false. It
+	 *    represents whether the user has won the game yet or not.
+	 * 2. Add an effect that runs every time the `dice` state array
+	 *    changes. For now, just console.log("Dice state changed").
+	 */
+
 	function allNewDice() {
 		const newDice = [];
 		for (let i = 0; i < 10; i++) {
@@ -16,6 +24,7 @@ function App() {
 	}
 
 	const [dice, setDice] = useState(allNewDice());
+	const [tenzies, setTenzies] = useState(false);
 
 	const rollDice = () => {
 		setDice((prevDie) =>
@@ -25,24 +34,6 @@ function App() {
 		);
 	};
 
-	/***
-	 * Another solution to rolling dice while holding the values with isHeld:true,
-	 * 
-	 * - create another function called generateNewDie() that returns the object with properties: value, isHeld, id
-	 * 
-	 * ex.  
-	 * 	function generateNewDie() {
-	 * 		return {
-	 * 			value: Math.ceil(Math.random() * 6),
-	 * 			isHeld: false,
-	 * 			id: nanoid()
-	 * 		}
-	 * 	}
-	 * 
-	 * - then call that function in the allNewDie(), and replace the current value that is being pushed.
-	 * ex. newDice.push(generateNewDie())
-	 */
-
 	const holdDice = (id) => {
 		setDice((prevDie) =>
 			prevDie.map((die) => {
@@ -50,6 +41,10 @@ function App() {
 			})
 		);
 	};
+
+	useEffect(() => {
+		console.log("Dice state changed");
+	}, [dice]);
 
 	const displayDieEl = dice.map((die) => (
 		<Die key={die.id} {...die} onClick={() => holdDice(die.id)} />
