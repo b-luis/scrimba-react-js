@@ -32,7 +32,9 @@ function App() {
 	const rollDice = () => {
 		setDice((prevDie) =>
 			prevDie.map((die) => {
-				return die.isHeld ? { ...die } : { ...die, value: Math.ceil(Math.random() * 6) };
+				return die.isHeld
+					? { ...die }
+					: { ...die, id: nanoid(), value: Math.ceil(Math.random() * 6) };
 			})
 		);
 	};
