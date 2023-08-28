@@ -7,6 +7,7 @@ import Confetti from "react-confetti";
 function App() {
 	const [dice, setDice] = useState(allNewDice());
 	const [tenzies, setTenzies] = useState(false);
+	const [roll, setRoll] = useState(0);
 	const { width, height } = useWindowSize();
 
 	function allNewDice() {
@@ -21,21 +22,18 @@ function App() {
 		return newDice;
 	}
 
-	/**
-	 * Challenge: Allow the user to play a new game when the
-	 * button is clicked and they've already won
-	 */
-
 	const rollDice = () => {
 		if (tenzies) {
 			setDice(allNewDice());
 			setTenzies(false);
+			setRoll(0);
 		} else {
 			setDice((prevDie) =>
 				prevDie.map((die) => {
 					return die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6), id: nanoid() };
 				})
 			);
+			setRoll((prevRoll) => ++prevRoll);
 		}
 	};
 
@@ -65,19 +63,26 @@ function App() {
 	));
 
 	return (
-		<main className="container__center rounded-md bg-slate-200 p-5 md:p-16">
-			{tenzies && <Confetti width={width} height={height} />}
-			<Header />
-			<div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5">
-				{displayDieEl}
+		<>
+			<main className="container__center relative rounded-md bg-slate-200 p-5 md:p-16">
+				{tenzies && <Confetti width={width} height={height} />}
+
+				<Header />
+				<div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5">
+					{displayDieEl}
+				</div>
+				<button
+					className="mt-5 rounded-md bg-blue-700 px-20 py-5 text-white shadow-md hover:bg-blue-900"
+					onClick={rollDice}
+				>
+					{tenzies ? "New Game" : "Roll"}
+				</button>
+			</main>
+			<div className="absolute left-0 top-0 bg-slate-400 px-4 py-1 text-left text-lg">
+				<p>🎲 Roll Count: {roll}</p>
+				<p>⌛ Best Time: 100ms</p>
 			</div>
-			<button
-				className="mt-5 rounded-md bg-blue-700 px-20 py-5 text-white shadow-md hover:bg-blue-900"
-				onClick={rollDice}
-			>
-				{tenzies ? "New Game" : "Roll"}
-			</button>
-		</main>
+		</>
 	);
 }
 

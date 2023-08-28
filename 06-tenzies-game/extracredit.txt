@@ -1,0 +1,4 @@
+- css: put real dots on the dice
+- track the number of rolls
+- save the best time to localStorage
+- track the time it took to win 
