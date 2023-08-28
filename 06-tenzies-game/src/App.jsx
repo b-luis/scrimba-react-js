@@ -5,15 +5,9 @@ import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
 function App() {
-	/**
-	 * Challenge: Tie off loose ends!
-	 * 1. If tenzies is true, Change the button text to "New Game"
-	 * 2. If tenzies is true, use the "react-confetti" package to
-	 *    render the <Confetti /> component 🎉
-	 *
-	 *    Hint: don't worry about the `height` and `width` props
-	 *    it mentions in the documentation.
-	 */
+	const [dice, setDice] = useState(allNewDice());
+	const [tenzies, setTenzies] = useState(false);
+	const { width, height } = useWindowSize();
 
 	function allNewDice() {
 		const newDice = [];
@@ -27,15 +21,22 @@ function App() {
 		return newDice;
 	}
 
-	const [dice, setDice] = useState(allNewDice());
-	const [tenzies, setTenzies] = useState(false);
+	/**
+	 * Challenge: Allow the user to play a new game when the
+	 * button is clicked and they've already won
+	 */
 
 	const rollDice = () => {
-		setDice((prevDie) =>
-			prevDie.map((die) => {
-				return die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6), id: nanoid() };
-			})
-		);
+		if (tenzies) {
+			setDice(allNewDice());
+			setTenzies(false);
+		} else {
+			setDice((prevDie) =>
+				prevDie.map((die) => {
+					return die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6), id: nanoid() };
+				})
+			);
+		}
 	};
 
 	const holdDice = (id) => {
@@ -62,7 +63,7 @@ function App() {
 	const displayDieEl = dice.map((die) => (
 		<Die key={die.id} {...die} onClick={() => holdDice(die.id)} />
 	));
-	const { width, height } = useWindowSize();
+
 	return (
 		<main className="container__center rounded-md bg-slate-200 p-5 md:p-16">
 			{tenzies && <Confetti width={width} height={height} />}
