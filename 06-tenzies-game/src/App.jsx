@@ -3,9 +3,7 @@ import { Die, Header } from "../src/components";
 import { nanoid } from "nanoid";
 
 function App() {
-	const allNewDice = () => {
-		// ? reference:
-		// https://stackoverflow.com/questions/46056998/how-add-item-in-an-object
+	function allNewDice() {
 		const newDice = [];
 		for (let i = 0; i < 10; i++) {
 			newDice.push({
@@ -15,19 +13,35 @@ function App() {
 			});
 		}
 		return newDice;
-	};
+	}
 
 	const [dice, setDice] = useState(allNewDice());
 
 	const rollDice = () => {
 		setDice((prevDie) =>
 			prevDie.map((die) => {
-				return die.isHeld
-					? { ...die }
-					: { ...die, id: nanoid(), value: Math.ceil(Math.random() * 6) };
+				return die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6), id: nanoid() };
 			})
 		);
 	};
+
+	/***
+	 * Another solution to rolling dice while holding the values with isHeld:true,
+	 * 
+	 * - create another function called generateNewDie() that returns the object with properties: value, isHeld, id
+	 * 
+	 * ex.  
+	 * 	function generateNewDie() {
+	 * 		return {
+	 * 			value: Math.ceil(Math.random() * 6),
+	 * 			isHeld: false,
+	 * 			id: nanoid()
+	 * 		}
+	 * 	}
+	 * 
+	 * - then call that function in the allNewDie(), and replace the current value that is being pushed.
+	 * ex. newDice.push(generateNewDie())
+	 */
 
 	const holdDice = (id) => {
 		setDice((prevDie) =>
