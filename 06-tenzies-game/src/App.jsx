@@ -8,6 +8,7 @@ function App() {
 	const [dice, setDice] = useState(allNewDice());
 	const [tenzies, setTenzies] = useState(false);
 	const [roll, setRoll] = useState(0);
+	const [bestTime, setBestTime] = useState(0);
 	const { width, height } = useWindowSize();
 
 	function allNewDice() {
@@ -80,7 +81,7 @@ function App() {
 			</main>
 			<div className="absolute left-0 top-0 bg-slate-400 px-4 py-1 text-left text-lg">
 				<p>🎲 Roll Count: {roll}</p>
-				<p>⌛ Best Time: 100ms</p>
+				<p>⌛ Best Time: {bestTime}</p>
 			</div>
 		</>
 	);
